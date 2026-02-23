@@ -1,7 +1,12 @@
 # DEGO Project - Team 7
 
+## Abstract (TO BE WRITTEN AFTER FINDINGS)
+
 ## Team Members 
 - Benjamin Iby
+- Filippo Deluchi
+- Maximilian Haussmann
+- Tim Schmitz
 
 ## Project Descriptions
 Credit scoring bias analysis for DEGO course
