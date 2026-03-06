@@ -12,14 +12,13 @@
 Credit scoring bias analysis for DEGO course
 
 ## Structure
-- ‘ data /‘ - Dataset files
-- ‘ notebooks /‘ - Jupyter analysis notebooks
-- ‘ src /‘ - Python source code
-- ‘ reports /‘ - Final deliverables
+- 01_DataQualityCheck: Part 1 of the GP done by Data Engineer
+- 02_BiasAnalysis: Part 2 of the GP and done by Data Scientist
+- 03_Privacy: Part 3 of the GP and done by Governance Officer
 
 ## Status Quo
 
-At the current stage of the project, the data engineering and preparation pipeline is fully implemented and operational. This includes:
+At the current stage of the project, the data engineering and preparation pipeline as well as the bias detection is fully implemented and operational. This includes:
 
 - Loading and cleaning raw datasets
 - Handling missing and incomplete records
@@ -37,22 +36,11 @@ The bias analysis has been conducted, including:
 - Calculation of relevant fairness metrics
 - Visualization of results
 - Interpretation of identified disparities
-
-At this point, the univariate bias analysis is complete. However, multivariate bias analysis is still pending and will be the final analytical extension.
-
-Overall, the technical pipeline (data ingestion → cleaning → feature engineering → bias metrics → visualization) is complete and reproducible.
+- Multivariate analysis
 
 ## Next Steps
 
-The remaining tasks are structured as follows:
-
-* Extend bias evaluation to intersectional groups
-* Compare results against univariate findings
-* Document methodological approach and implications
-
-- Governance & Ethical Framework
-
-Starting today, the governance section will be developed. This includes:
+Today, the Governance framework will be finished:
 
 * Ethical implications of identified bias
 * Regulatory context (e.g., AI governance & fairness standards)
@@ -62,10 +50,7 @@ Starting today, the governance section will be developed. This includes:
 
 - Final Deliverables
 
-* Integrate multivariate findings
 * Polish visualizations and explanations
 * Record project presentation video
-* Final project submission (target: Friday/Saturday)
-
-With governance work beginning now and multivariate analysis completed in parallel, the project is on track to be fully wrapped up by the end of the week.
+* Final project submission (target: Friday/Saturday - on track to be finished today, Friday)
 
