@@ -1,6 +1,6 @@
 # DEGO Project – Team 7
 
-*Repository: [github.com/maxhaus31/dego-project-team7](https://github.com/maxhaus31/dego-project-team7) · Group 7 · DEGO 2606 · Nova SBE*
+Group 7 · DEGO 2606 · *Repository: [github.com/maxhaus31/dego-project-team7](https://github.com/maxhaus31/dego-project-team7) ·
 *YouTube Link: https://youtu.be/8CE5gpT0XNA*
 
 
