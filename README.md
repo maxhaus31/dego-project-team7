@@ -83,27 +83,34 @@ A Random Forest feature importance analysis confirms that `Age` and `Is_Female` 
 
 ### 3. Privacy & Governance
 
+
 **PII Mapping & Remediations:**
 
-| Field | PII Type | GDPR Article | Remediation |
+| Field | PII Type | GDPR Article | Remediation Applied |
 |---|---|---|---|
-| Full Name | Direct identifier | Art. 5(1)(c) – minimization | Pseudonymized (SHA-256 + salt) |
-| Email Address | Direct identifier | Art. 5(1)(e) – storage limit | Pseudonymized (SHA-256 + salt) |
-| Social Security No. | Sensitive identifier | Art. 9 – special category | Pseudonymized (SHA-256 + salt) |
+| Full Name | Direct identifier | Art. 5(1)(c) – minimization | Pseudonymized / hash + salt |
+| Email Address | Direct identifier | Art. 5(1)(e) – storage limit | Pseudonymized / hash + salt |
+| Social Security No. | Direct identifier | Art. 9 – special category | Pseudonymized / hash + salt |
 | Date of Birth | Quasi-identifier | Art. 5(1)(c) – minimization | Generalized to age range |
 | IP Address | Quasi-identifier | Art. 5(1)(b) – purpose limitation | Eliminated |
-| ZIP Code | Quasi-identifier | Art. 5(1)(c) – minimization | Last two digits anonymized |
-| Spending Behaviour (Alcohol, Gambling, Adult Ent., Healthcare) | Art. 9 sensitive | Art. 9 – special category | Records deleted; explicit consent required |
+| Gender | Quasi-identifier | Art. 5(1)(c) – minimization | Retained (bias monitoring) |
+| ZIP Code | Quasi-identifier | Art. 5(1)(c) – minimization | Anonymization of last two digits |
+| Income, Savings, Interest Rates, Loans | Quasi-identifier | Art. 5(1)(c) – minimization | Retained for credit scoring |
+| Spending Behavior (Alcohol, Gambling, Adult Ent., Healthcare) | Sensitive behavioral data | Art. 9 – special category | Sensitive records deleted; explicit consent required |
 
-**EU AI Act Classification:** Credit scoring is classified as **HIGH RISK** under Annex III, requiring human oversight, transparency, and audit trails.
+**EU AI Act Classification:** Credit scoring is classified as **HIGH RISK** under Annex III, requiring human oversight, transparency, and audit trails. Pseudonymization demonstrated via SHA-256 + salt applied to Name, Email, and SSN.
 
 **Governance Gaps & Fixes (5 identified):**
 
-1. **No Audit Trail** *(AI Act Art. 12 violation)*: Implemented automated JSON audit log capturing timestamp, app_id, AI decision, human intervention flag, and officer email. 500 events logged.
-2. **No Consent Mechanism** *(GDPR Art. 9 violation)*: Sensitive spending records deleted. New `tracking_customer_consent` column added. Formal explicit consent procedure required.
-3. **No Human Oversight** *(AI Act Art. 14 violation)*: `decision_loan_approved` renamed to `decision_loan_approved_AI`. New `decision_loan_approved_human` column created, awaiting human-in-the-loop implementation.
-4. **Fairness Principle Violation** *(GDPR Art. 7 / AI Act Art. 10)*: Recommendations include data re-integration with bias-free sources, algorithmic re-weighting, and enforcement of DI ≥ 0.80 as a fairness constraint.
-5. **No Retention Policy** *(GDPR Art. 5 violation)*: Retention schedule implemented — denied loans deleted 365 days after rejection; approved loans deleted 365 days after final installment.
+1. **No Audit Trail** *(AI Act Art. 12 violation)*: Absence of systematic logging infrastructure prevented traceability of decision-making processes. **Fix:** Implemented automated JSON audit log per AI Act Art. 12 & 14. Each record captures timestamp, `app_id`, AI decision, human intervention flag, and officer email. 500 events logged in `nova_cred_audit_trail_complete.json`.
+
+2. **No Consent Mechanism** *(GDPR Art. 9 violation)*: Sensitive spending data collected with no record of explicit user consent. **Fix:** Sensitive spending categories (Alcohol, Gambling, Adult Entertainment, Healthcare) identified under Art. 9. Historical records deleted. New `tracking_customer_consent` column added. Formal explicit consent procedure required at submission.
+
+3. **No Human Oversight** *(AI Act Art. 14 violation)*: Fully automated decisions with no review layer and no human-in-the-loop. **Fix:** `decision_loan_approved` renamed to `decision_loan_approved_AI`. New column `decision_loan_approved_human` created (currently NaN — awaiting human-in-the-loop implementation per AI Act Art. 14).
+
+4. **Fairness Principle Violation** *(GDPR Art. 7 / AI Act Art. 10)*: Dataset is biased for gender and age. **Fix:** Data integration with new high-quality bias-free data; algorithmic re-weighting; introduction of fairness constraints enforcing a minimum disparate impact ratio of 0.80.
+
+5. **No Retention Policy** *(GDPR Art. 5 violation)*: Data kept indefinitely with no temporal threshold. **Fix:** Retention schedule implemented — denied loans: `automatic_deletion_date = rejection_date + 365 days`; approved loans: `deletion_date = final_installment_date + 365 days`.
 
 ---
 
